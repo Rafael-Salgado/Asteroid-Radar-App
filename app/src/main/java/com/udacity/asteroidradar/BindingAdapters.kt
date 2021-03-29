@@ -50,22 +50,17 @@ fun bindRecyclerViewAdapter(recyclerView: RecyclerView, data: List<Asteroid>?){
     adapter.submitList(data)
 }
 
-@BindingAdapter("itemStatusImage")
-fun bindItemImage(imageView: ImageView, isHazardous: Boolean){
-    if (isHazardous){
-        imageView.setImageResource(R.drawable.ic_status_potentially_hazardous)
-    }else{
-        imageView.setImageResource(R.drawable.ic_status_normal)
-    }
-}
-
 @BindingAdapter("todayImage")
-fun bindTodayImage(imageView: ImageView, urlImage: String?){
-    urlImage?.let{
-        val uriImg = urlImage.toUri().buildUpon().scheme("https").build()
+fun bindTodayImage(imageView: ImageView, pictureOfDay: PictureOfDay?){
+    val url =  pictureOfDay?.url
+    url?.let{
+        val uriImg = url.toUri().buildUpon().scheme("https").build()
+        imageView.contentDescription = imageView.context.getString(
+                R.string.nasa_picture_of_day_content_description_format,pictureOfDay.title)
         Picasso.with(imageView.context)
                 .load(uriImg)
                 .placeholder(R.drawable.placeholder_picture_of_day)
                 .into(imageView)
+
     }
 }

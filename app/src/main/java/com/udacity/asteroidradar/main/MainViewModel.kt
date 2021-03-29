@@ -5,21 +5,15 @@ import android.util.Log
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.udacity.asteroidradar.Asteroid
-import com.udacity.asteroidradar.Constants
+import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.api.NeoApi
-import com.udacity.asteroidradar.api.NeoWsApi
+import com.udacity.asteroidradar.api.getPictureOfDay
 import com.udacity.asteroidradar.api.getStartAndEndDate
-import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
-import com.udacity.asteroidradar.database.asDomainAsteroid
 import com.udacity.asteroidradar.database.getDatabase
 import com.udacity.asteroidradar.repository.AsteroidsRepository
-import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import org.json.JSONObject
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 class MainViewModel(application: Application) : ViewModel() {
 
@@ -29,9 +23,9 @@ class MainViewModel(application: Application) : ViewModel() {
     val navigateToSelectedAsteroid: LiveData<Asteroid?>
         get() = _navigateToSelectedAsteroid
 
-    private val _todayImgUrl = MutableLiveData<String>()
-    val todayImgUrl: LiveData<String>
-        get() = _todayImgUrl
+    private val _todayImg = MutableLiveData<PictureOfDay>()
+    val todayImg: LiveData<PictureOfDay>
+        get() = _todayImg
 
     private val database = getDatabase(application)
     private val daysList = getStartAndEndDate()
@@ -63,8 +57,13 @@ class MainViewModel(application: Application) : ViewModel() {
 
 
     private suspend fun getNasaTodayImage(apiKey: String) {
-        val result = JSONObject(NeoApi.retrofitService.getTodayImage(apiKey))
-        _todayImgUrl.value = result.getString("url")
+        try{
+            val result = JSONObject(NeoApi.retrofitService.getTodayImage(apiKey))
+            _todayImg.value = getPictureOfDay(result)
+        }catch (e: Exception){
+            Log.e("ASTEROID_API", e.toString())
+        }
+
     }
 
 
