@@ -74,3 +74,10 @@ fun getStartAndEndDate(): ArrayList<String> {
     dateList.add(dateFormat.format(calendar.time))
     return dateList
 }
+
+fun getYesterdayDate(): String{
+    val calendar = Calendar.getInstance()
+    val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
+    calendar.add(Calendar.DAY_OF_YEAR,-1)
+    return  dateFormat.format(calendar.time)
+}
