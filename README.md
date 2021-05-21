@@ -1,9 +1,5 @@
-# Purpose of this Folder
+# Asteroid Radar Android App
 
-This folder should contain the scaffolded project files to get a student started on their project. This repo will be added to the Classroom for students to use, so please do not have any solutions in this folder.
+This is the second project of the Android Kotlin Developer Nanodegree
 
-## Note: Android Kotlin Gradle Update
-Use the updated Gradle version in the `~/gradle/wrapper/gradle-wrapper.properties` file:
-```
-distributionUrl = https\://services.gradle.org/distributions/gradle-6.1.1-all.zip
-```
+In the strings.xml resource file there is a string called "api_key" that it is destinated to store the API Key.
