@@ -3,6 +3,7 @@ package com.udacity.asteroidradar.work
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.udacity.asteroidradar.BuildConfig
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.api.getStartAndEndDate
 import com.udacity.asteroidradar.api.getYesterdayDate
@@ -21,7 +22,7 @@ class RefreshDataWorker(private val context: Context, params:WorkerParameters): 
     override suspend fun doWork(): Result {
         val database = getDatabase(context)
         val daysList = getStartAndEndDate()
-        val key = context.getString(R.string.api_key)
+        val key = BuildConfig.api_key
         val asteroidsRepository = AsteroidsRepository(database,daysList)
         withContext(Dispatchers.IO){
             database.asteroidDao.deleteYesterdayAsteroids(getYesterdayDate())

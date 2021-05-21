@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.udacity.asteroidradar.Asteroid
+import com.udacity.asteroidradar.BuildConfig
 import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.api.NeoApi
@@ -49,7 +50,7 @@ class MainViewModel(application: Application) : ViewModel() {
 
     init {
         _asteroidsListStatus.value = true
-        val key = application.getString(R.string.api_key)
+        val key = BuildConfig.api_key
         asteroidsListLiveData = asteroidsRepository.getAsteroidList(AsteroidsFilter.SAVED)
         asteroidsListLiveData.observeForever(asteroidsListObserver)
         viewModelScope.launch {

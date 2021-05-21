@@ -1,10 +1,12 @@
-apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'androidx.navigation.safeargs'
-apply plugin: 'kotlin-android-extensions'
-
+plugins {
+    id("com.android.application")
+    id("kotlin-android")
+    id('kotlin-android-extensions')
+    id('kotlin-kapt')
+    id('androidx.navigation.safeargs')
+    // 1. Include the plugin
+    id("com.google.secrets_gradle_plugin") version "0.6"
+}
 android {
     compileSdkVersion 30
     buildToolsVersion '30.0.3'
